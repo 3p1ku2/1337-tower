@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "outDir": "./dist",
+    "resolveJsonModule": true,
+    "sourceMap": true,
+    "strictNullChecks": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.unit.ts"]
+}
