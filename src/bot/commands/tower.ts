@@ -5,9 +5,8 @@ export const tower = new SlashCommandBuilder()
     option
       .setName("wallet_address")
       .setDescription(
-        "Your wallet holding skulls used to track your Tower listings"
+        "Register your wallet holding 1337 skulls. Used to track your 1.337 listings."
       )
-      .setRequired(true)
   ) // Returning last for type check
   .setName("tower")
   .setDescription("Earn points on your 1.337 listings");
