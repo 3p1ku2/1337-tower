@@ -18,10 +18,8 @@ async function main() {
 
     results.forEach((r) => {
       if (r.status === "rejected") {
-        if (r.reason instanceof MongoError) {
-          if (r.reason.code === 48) {
-            console.log(`skipping collection creation:`, r.reason.message);
-          }
+        if (r.reason instanceof MongoError && r.reason.code === 48) {
+          console.log(`skipping collection creation:`, r.reason.message);
         } else {
           throw r.reason;
         }
