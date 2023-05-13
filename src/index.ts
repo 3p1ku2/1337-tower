@@ -1,11 +1,30 @@
+import { MongoError } from "mongodb";
+
 import { bot } from "./bot";
+import { createMetadataCollection, createUsersCollection } from "./services";
 import { getDiscordClient } from "./clients/discord";
 import { mongo } from "./clients/mongo";
 
 async function main() {
   try {
     // Resolve connection to Mongo client
-    await mongo;
+    const mongoClient = await mongo;
+
+    // Create db collections
+    const results = await Promise.allSettled([
+      createUsersCollection(mongoClient),
+      createMetadataCollection(mongoClient),
+    ]);
+
+    results.forEach((r) => {
+      if (r.status === "rejected") {
+        if (r.reason instanceof MongoError && r.reason.code === 48) {
+          console.log(`skipping collection creation:`, r.reason.message);
+        } else {
+          throw r.reason;
+        }
+      }
+    });
 
     // Start bot
     await bot();
